@@ -2,7 +2,7 @@ import { createContext, useContext, useState, useEffect, useCallback, useRef, Re
 import { io, Socket } from 'socket.io-client';
 import { INotification, SOCKET_EVENTS } from '@ecommerce/notifications';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 interface NotificationContextType {
   notifications: INotification[];

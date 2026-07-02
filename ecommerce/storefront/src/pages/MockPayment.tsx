@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import { Button, Badge } from '@ecommerce/ui';
 import { CreditCard, Smartphone, Shield, Lock, ChevronRight, AlertCircle } from 'lucide-react';
 
-const API_URL = 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 interface OrderData {
   _id: string;

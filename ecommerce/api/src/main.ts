@@ -26,9 +26,13 @@ const server = http.createServer(app);
 // Initialize Socket.IO
 initializeSocket(server);
 
+const allowedOrigins = process.env.FRONTEND_URLS 
+  ? process.env.FRONTEND_URLS.split(',').map(url => url.trim())
+  : ['http://localhost:4200', 'http://localhost:4201'];
+
 // Middleware
 app.use(cors({
-  origin: ['http://localhost:4200', 'http://localhost:4201'],
+  origin: allowedOrigins,
   credentials: true,
 }));
 app.use(express.json());

@@ -5,10 +5,14 @@ import User from './models/User';
 
 let io: Server;
 
+const allowedOrigins = process.env.FRONTEND_URLS 
+  ? process.env.FRONTEND_URLS.split(',').map(url => url.trim())
+  : ['http://localhost:4200', 'http://localhost:4201'];
+
 export const initializeSocket = (server: HttpServer): Server => {
   io = new Server(server, {
     cors: {
-      origin: ['http://localhost:4200', 'http://localhost:4201'],
+      origin: allowedOrigins,
       methods: ['GET', 'POST'],
       credentials: true,
     },

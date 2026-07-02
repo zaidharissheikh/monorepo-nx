@@ -12,7 +12,7 @@ interface Order {
   createdAt: string;
 }
 
-const API_URL = 'http://localhost:3000';
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 const statusColors: Record<string, 'gray' | 'yellow' | 'blue' | 'green' | 'red'> = {
   Pending: 'gray',
