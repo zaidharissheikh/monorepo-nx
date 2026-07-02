@@ -1,0 +1,13 @@
+@import "tailwindcss";
+@source "../../packages/ui";
+
+@theme {
+  --color-primary: #2563EB;
+}
+
+@layer base {
+  body {
+    background-color: var(--color-gray-50);
+    color: var(--color-gray-900);
+  }
+}

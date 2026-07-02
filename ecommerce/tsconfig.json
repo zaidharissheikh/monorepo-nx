@@ -1,0 +1,22 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compileOnSave": false,
+  "files": [],
+  "references": [
+    {
+      "path": "./storefront"
+    },
+    {
+      "path": "./admin"
+    },
+    {
+      "path": "./api"
+    },
+    {
+      "path": "./packages/ui"
+    },
+    {
+      "path": "./packages/notifications"
+    }
+  ]
+}

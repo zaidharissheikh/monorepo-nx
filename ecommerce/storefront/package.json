@@ -1,0 +1,8 @@
+{
+  "name": "@ecommerce/storefront",
+  "version": "0.0.1",
+  "private": true,
+  "dependencies": {
+    "lucide-react": "^1.22.0"
+  }
+}
