@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { Navbar, Footer } from '@ecommerce/ui';
 import Home from '../pages/Home';
 import Login from '../pages/Login';
@@ -33,7 +33,8 @@ export function App() {
             <Route path="/products" element={<ProductsList />} />
             <Route path="/product/:id" element={<ProductDetails />} />
             <Route path="/cart" element={<Cart />} />
-            <Route path="/profile" element={<Profile />} />
+            {/* Protected Profile Route */}
+            <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" replace />} />
             <Route path="/payment/:orderId" element={<MockPayment />} />
             <Route path="/payment-success/:orderId" element={<PaymentSuccess />} />
             <Route path="/payment-failed" element={<PaymentFailed />} />
