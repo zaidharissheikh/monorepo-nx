@@ -1,7 +1,11 @@
+import dotenv from 'dotenv';
+
+// Load env vars BEFORE any other imports that may read process.env at module level
+dotenv.config();
+
 import express from 'express';
 import cors from 'cors';
 import http from 'http';
-import dotenv from 'dotenv';
 import connectDB from './config/db';
 import productRoutes from './routes/products';
 import authRoutes from './routes/auth';
@@ -10,9 +14,6 @@ import orderRoutes from './routes/orders';
 import adminRoutes from './routes/admin';
 import notificationRoutes from './routes/notifications';
 import { initializeSocket } from './socket';
-
-// Load env vars
-dotenv.config();
 
 // Connect to database
 connectDB();
@@ -27,8 +28,11 @@ const server = http.createServer(app);
 initializeSocket(server);
 
 const allowedOrigins = process.env.FRONTEND_URLS 
-  ? process.env.FRONTEND_URLS.split(',').map(url => url.trim())
+  ? process.env.FRONTEND_URLS.split(',').map(url => url.trim().replace(/\/+$/, ''))
   : ['http://localhost:4200', 'http://localhost:4201'];
+
+console.log('[CORS] Raw FRONTEND_URLS env:', JSON.stringify(process.env.FRONTEND_URLS));
+console.log('[CORS] Parsed allowed origins:', JSON.stringify(allowedOrigins));
 
 // Middleware
 app.use(cors({

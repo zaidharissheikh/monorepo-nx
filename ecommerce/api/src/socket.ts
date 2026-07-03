@@ -6,7 +6,7 @@ import User from './models/User';
 let io: Server;
 
 const allowedOrigins = process.env.FRONTEND_URLS 
-  ? process.env.FRONTEND_URLS.split(',').map(url => url.trim())
+  ? process.env.FRONTEND_URLS.split(',').map(url => url.trim().replace(/\/+$/, ''))
   : ['http://localhost:4200', 'http://localhost:4201'];
 
 export const initializeSocket = (server: HttpServer): Server => {
