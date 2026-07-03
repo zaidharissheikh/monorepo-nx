@@ -2,12 +2,17 @@
 @source "../../packages/ui";
 
 @theme {
-  --color-primary: #2563EB;
+  --color-primary: #0f172a; /* Sleek slate-900 */
+  --color-accent: #c084fc; /* Soft vibrant purple for accents */
+  --font-sans: 'Inter', system-ui, sans-serif;
 }
 
 @layer base {
+  html {
+    scroll-behavior: smooth;
+  }
   body {
-    background-color: var(--color-gray-50);
-    color: var(--color-gray-900);
+    background-color: #f8fafc; /* Sleek off-white */
+    color: #0f172a; /* Deep charcoal */
   }
 }

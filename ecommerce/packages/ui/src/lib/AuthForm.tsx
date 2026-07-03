@@ -24,7 +24,7 @@ const AuthForm = ({ type, onSubmit, isLoading = false, error = null }: AuthFormP
   };
 
   return (
-    <div className="w-full max-w-md mx-auto bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
+    <div className="w-full max-w-md mx-auto bg-white/80 backdrop-blur-xl p-10 rounded-[2.5rem] shadow-2xl border border-white/50">
       <div className="text-center mb-8">
         <h2 className="text-2xl font-extrabold text-gray-900 tracking-tight">
           {type === 'login' ? 'Welcome back' : 'Create an account'}

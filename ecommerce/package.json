@@ -60,8 +60,10 @@
     "api"
   ],
   "dependencies": {
+    "@gsap/react": "^2.1.2",
     "bcryptjs": "^3.0.3",
     "express": "^5.1.0",
+    "gsap": "^3.15.0",
     "jsonwebtoken": "^9.0.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",

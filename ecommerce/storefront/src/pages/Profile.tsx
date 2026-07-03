@@ -1,7 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Badge, Button } from '@ecommerce/ui';
 import { User, Package, Settings, LogOut, CreditCard } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+
+gsap.registerPlugin(useGSAP);
 
 interface OrderItem {
   name: string;
@@ -38,6 +42,8 @@ const Profile = () => {
   const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  
+  const containerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     if (!userInfo.token) return;
@@ -54,37 +60,47 @@ const Profile = () => {
       .catch(() => setLoading(false));
   }, []);
 
+  useGSAP(() => {
+    if (userInfo.name) {
+      gsap.fromTo('.profile-sidebar', 
+        { y: 80, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: 'back.out(1.2)' }
+      );
+      gsap.fromTo('.profile-content', 
+        { y: 100, opacity: 0 },
+        { y: 0, opacity: 1, duration: 1.2, ease: 'back.out(1.2)', delay: 0.2 }
+      );
+    }
+  }, { scope: containerRef });
+
   if (!userInfo.name) {
-    return <div className="p-20 text-center text-gray-500">Please log in to view your profile.</div>;
+    return <div className="py-32 text-center text-gray-400 text-xl font-light">Please log in to view your profile.</div>;
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-      <div className="flex flex-col md:flex-row gap-8">
+    <div ref={containerRef} className="max-w-7xl mx-auto px-6 lg:px-8 py-16 bg-[#f8fafc] min-h-[calc(100vh-80px)]">
+      <div className="flex flex-col lg:flex-row gap-12">
         
         {/* Profile Sidebar */}
-        <aside className="w-full md:w-80 shrink-0">
-          <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
-            <div className="p-6 text-center border-b border-gray-100 bg-gray-50/50">
-              <div className="w-24 h-24 mx-auto bg-blue-100 text-primary flex items-center justify-center rounded-full text-4xl font-bold mb-4 shadow-inner">
-                {userInfo.name.charAt(0).toUpperCase()}
-              </div>
-              <h2 className="text-xl font-bold text-gray-900">{userInfo.name}</h2>
-              <p className="text-sm text-gray-500">{userInfo.email}</p>
-              <div className="mt-2">
-                <Badge color="blue">Customer</Badge>
+        <aside className="profile-sidebar w-full lg:w-80 shrink-0">
+          <div className="bg-white rounded-[2rem] shadow-sm border border-gray-100 overflow-hidden sticky top-32">
+            <div className="p-8 text-left border-b border-gray-100 bg-[#0f172a] text-white">
+              <h2 className="text-2xl font-extrabold mb-1 tracking-tight">{userInfo.name}</h2>
+              <p className="text-sm text-gray-400 font-light mb-4">{userInfo.email}</p>
+              <div className="inline-block px-4 py-1.5 rounded-full bg-white/20 text-xs font-bold tracking-widest uppercase">
+                Premium Member
               </div>
             </div>
-            <div className="p-4 space-y-1">
-              <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-primary bg-blue-50 rounded-xl transition-colors">
+            <div className="p-6 space-y-2">
+              <button className="w-full flex items-center gap-4 px-6 py-4 text-base font-bold text-[#c084fc] bg-purple-50/50 rounded-2xl transition-colors">
                 <User className="w-5 h-5" /> Account Details
               </button>
-              <button className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-primary rounded-xl transition-colors">
+              <button className="w-full flex items-center gap-4 px-6 py-4 text-base font-semibold text-gray-600 hover:bg-gray-50 hover:text-[#0f172a] rounded-2xl transition-colors">
                 <Settings className="w-5 h-5" /> Settings
               </button>
               <button 
                 onClick={() => { localStorage.removeItem('userInfo'); window.dispatchEvent(new Event('auth-updated')); window.location.href = '/login'; }}
-                className="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:bg-red-50 hover:text-red-600 rounded-xl transition-colors"
+                className="w-full flex items-center gap-4 px-6 py-4 text-base font-semibold text-gray-600 hover:bg-red-50 hover:text-red-500 rounded-2xl transition-colors mt-4"
               >
                 <LogOut className="w-5 h-5" /> Sign Out
               </button>
@@ -93,41 +109,38 @@ const Profile = () => {
         </aside>
 
         {/* Profile Content */}
-        <div className="flex-1 space-y-8">
-          <div className="bg-white p-8 rounded-2xl shadow-sm border border-gray-100">
-            <h3 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2">
-              <Package className="w-6 h-6 text-primary" /> Order History
-            </h3>
+        <div className="profile-content flex-1">
+          <div className="bg-white p-10 lg:p-14 rounded-[2.5rem] shadow-sm border border-gray-100">
+            <div className="flex items-center gap-4 mb-10 border-b border-gray-100 pb-8">
+              <Package className="w-8 h-8 text-[#c084fc]" />
+              <h3 className="text-3xl font-extrabold text-[#0f172a] tracking-tight">Order History</h3>
+            </div>
             
-            <div className="space-y-4">
+            <div className="space-y-6">
               {loading ? (
-                <div className="flex justify-center py-12">
-                  <div className="space-y-4 w-full">
-                    {[1, 2].map(i => (
-                      <div key={i} className="p-4 border border-gray-100 rounded-xl bg-gray-50/50 animate-pulse">
-                        <div className="flex items-center gap-3 mb-2">
-                          <div className="h-5 w-24 bg-gray-200 rounded"></div>
-                          <div className="h-5 w-16 bg-gray-200 rounded"></div>
-                        </div>
-                        <div className="h-4 w-48 bg-gray-100 rounded"></div>
-                      </div>
-                    ))}
-                  </div>
+                <div className="space-y-6 w-full">
+                  {[1, 2].map(i => (
+                    <div key={i} className="p-8 border border-gray-100 rounded-3xl bg-gray-50 animate-pulse">
+                      <div className="h-6 w-32 bg-gray-200 rounded mb-4"></div>
+                      <div className="h-4 w-64 bg-gray-200 rounded mb-6"></div>
+                      <div className="h-10 w-32 bg-gray-200 rounded-full"></div>
+                    </div>
+                  ))}
                 </div>
               ) : orders.length === 0 ? (
-                <div className="text-center py-12 text-gray-400">
-                  <Package className="w-12 h-12 mx-auto mb-4 opacity-50" />
-                  <p className="text-lg font-medium">No orders yet</p>
-                  <p className="text-sm mt-1">Your order history will appear here.</p>
+                <div className="text-center py-20 text-gray-400">
+                  <Package className="w-16 h-16 mx-auto mb-6 opacity-30" />
+                  <p className="text-2xl font-bold text-[#0f172a] mb-2">No orders yet</p>
+                  <p className="text-base font-light">Your premium purchases will appear here.</p>
                 </div>
               ) : (
                 orders.map(order => {
                   const itemCount = order.orderItems.reduce((sum, item) => sum + item.qty, 0);
                   return (
-                    <div key={order._id} className="flex flex-col sm:flex-row sm:items-center justify-between p-4 border border-gray-100 rounded-xl hover:border-gray-200 transition-colors bg-gray-50/50">
-                      <div className="mb-4 sm:mb-0">
-                        <div className="flex items-center gap-2 flex-wrap mb-1">
-                          <span className="font-bold text-gray-900">#{order._id.slice(-8).toUpperCase()}</span>
+                    <div key={order._id} className="group flex flex-col sm:flex-row sm:items-center justify-between p-8 border border-gray-100 rounded-[2rem] hover:border-gray-300 hover:shadow-md transition-all bg-white">
+                      <div className="mb-6 sm:mb-0">
+                        <div className="flex items-center gap-3 flex-wrap mb-3">
+                          <span className="font-extrabold text-lg text-[#0f172a]">#{order._id.slice(-8).toUpperCase()}</span>
                           <Badge color={statusColor(order.status)}>{order.status}</Badge>
                           {order.isPaid ? (
                             <Badge color="green">Paid</Badge>
@@ -135,17 +148,19 @@ const Profile = () => {
                             <Badge color="red">Unpaid</Badge>
                           )}
                         </div>
-                        <p className="text-sm text-gray-500">
-                          Ordered on {new Date(order.createdAt).toLocaleDateString()} • {itemCount} {itemCount === 1 ? 'item' : 'items'}
-                          {order.paymentMethod && <span> • {order.paymentMethod}</span>}
+                        <p className="text-sm text-gray-500 font-medium">
+                          {new Date(order.createdAt).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
+                          <span className="mx-2">•</span>
+                          {itemCount} {itemCount === 1 ? 'Item' : 'Items'}
+                          {order.paymentMethod && <><span className="mx-2">•</span>{order.paymentMethod}</>}
                         </p>
                       </div>
-                      <div className="flex items-center gap-4">
-                        <span className="font-bold text-gray-900">${order.totalPrice.toFixed(2)}</span>
+                      <div className="flex items-center gap-6">
+                        <span className="text-2xl font-bold text-[#0f172a] tracking-tight">${order.totalPrice.toFixed(2)}</span>
                         {!order.isPaid && (
                           <Link to={`/payment/${order._id}`}>
-                            <Button size="sm">
-                              <CreditCard className="w-3.5 h-3.5 mr-1.5" />
+                            <Button className="h-12 px-6 rounded-full bg-[#0f172a] text-white hover:bg-gray-800 font-bold">
+                              <CreditCard className="w-4 h-4 mr-2" />
                               Pay Now
                             </Button>
                           </Link>
