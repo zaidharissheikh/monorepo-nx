@@ -6,6 +6,10 @@ on:
       - main
   pull_request:
 
+defaults:
+  run:
+    working-directory: ecommerce
+
 jobs:
   main:
     runs-on: ubuntu-latest
@@ -17,8 +21,9 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
           cache: 'npm'
+          cache-dependency-path: 'ecommerce/package-lock.json'
 
       - name: Install dependencies
         run: npm ci
