@@ -173,7 +173,7 @@ const Home = () => {
           </div>
         ))}
 
-        <div className="relative z-10 w-full max-w-7xl mx-auto px-6 lg:px-12 pb-16 md:pb-24">
+        <div className="relative z-10 w-full max-w-[1680px] mx-auto px-6 lg:px-12 pb-16 md:pb-24">
           <div className="max-w-2xl">
             <div className="overflow-hidden mb-4">
               <h1 className="hero-text text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tighter text-white leading-[1.1] min-h-[120px] md:min-h-[160px] flex items-end">
@@ -215,7 +215,7 @@ const Home = () => {
 
       {/* ═══════════ 2. CATEGORY QUICK-NAV STRIP ═══════════ */}
       <section className="categories-strip bg-white border-b border-gray-200 py-6">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="max-w-[1680px] mx-auto px-6 lg:px-12">
           <div className="flex items-center gap-4 overflow-x-auto pb-2 scrollbar-hide">
             {categories.map(cat => (
               <Link
@@ -239,7 +239,7 @@ const Home = () => {
 
       {/* ═══════════ 3. PROMOTIONAL DEAL BANNERS ═══════════ */}
       <section className="deals-section py-8 md:py-12">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="max-w-[1680px] mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {bannerDeals.map((deal, idx) => (
               <Link
@@ -265,7 +265,7 @@ const Home = () => {
 
       {/* ═══════════ 4. TRENDING NOW ═══════════ */}
       <section className="products-section py-8 md:py-12 bg-white">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="max-w-[1680px] mx-auto px-6 lg:px-12">
           <div className="flex items-center justify-between mb-8">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-xl bg-orange-100 flex items-center justify-center">
@@ -305,7 +305,7 @@ const Home = () => {
 
       {/* ═══════════ 5. TRUST / VALUE PROPS BAR ═══════════ */}
       <section className="trust-bar py-8 bg-[#f8fafc] border-y border-gray-200">
-        <div className="max-w-7xl mx-auto px-6 lg:px-12">
+        <div className="max-w-[1680px] mx-auto px-6 lg:px-12">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
             {[
               { icon: <Truck className="w-6 h-6" />, title: 'Free Shipping', desc: 'On orders over $50' },
@@ -330,7 +330,7 @@ const Home = () => {
       {/* ═══════════ 6. PRODUCTS BY CATEGORY ═══════════ */}
       {Object.entries(categoryGroups).map(([categoryName, categoryProducts]) => (
         <section key={categoryName} className="py-8 md:py-12 bg-white border-t border-gray-100">
-          <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="max-w-[1680px] mx-auto px-6 lg:px-12">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-purple-100 flex items-center justify-center">
@@ -373,7 +373,7 @@ const Home = () => {
       {/* ═══════════ 7. RECENTLY VIEWED / ALL PRODUCTS ═══════════ */}
       {!loading && products.length > 5 && (
         <section className="py-8 md:py-12 bg-[#f8fafc]">
-          <div className="max-w-7xl mx-auto px-6 lg:px-12">
+          <div className="max-w-[1680px] mx-auto px-6 lg:px-12">
             <div className="flex items-center justify-between mb-8">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-blue-100 flex items-center justify-center">

@@ -81,7 +81,7 @@ const ProductDetails = () => {
 
   if (loading) {
     return (
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
+      <div className="max-w-[1680px] mx-auto px-6 lg:px-12 py-16">
         <Skeleton className="h-5 w-64 mb-10" />
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <Skeleton className="aspect-square w-full rounded-2xl" />
@@ -112,7 +112,7 @@ const ProductDetails = () => {
 
   return (
     <div ref={containerRef} className="bg-white min-h-screen">
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-12">
+      <div className="max-w-[1680px] mx-auto px-6 lg:px-12 py-12">
         <div className="mb-8">
           <Breadcrumb items={breadcrumbs} />
         </div>

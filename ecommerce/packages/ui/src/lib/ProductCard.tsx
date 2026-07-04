@@ -25,7 +25,7 @@ const ProductCard = ({ id, name, price, imageUrl, category }: ProductCardProps) 
   };
 
   return (
-    <div className="group flex flex-col bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
+    <div className="group flex flex-col h-full bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 border border-gray-100">
       <Link to={`/product/${id}`} className="relative aspect-[4/5] overflow-hidden bg-gray-100">
         <img
           src={imageUrl}
@@ -47,7 +47,7 @@ const ProductCard = ({ id, name, price, imageUrl, category }: ProductCardProps) 
           <span className="text-xl font-extrabold text-gray-900">
             ${price.toFixed(2)}
           </span>
-          <button 
+          <button
             onClick={handleAddToCart}
             className="flex items-center justify-center p-3 rounded-xl bg-gray-900 text-white hover:bg-primary transition-colors duration-200 active:scale-95"
             aria-label="Add to Cart"

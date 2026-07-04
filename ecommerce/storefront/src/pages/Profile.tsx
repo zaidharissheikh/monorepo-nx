@@ -78,7 +78,7 @@ const Profile = () => {
   }
 
   return (
-    <div ref={containerRef} className="max-w-7xl mx-auto px-6 lg:px-8 py-16 bg-[#f8fafc] min-h-[calc(100vh-80px)]">
+    <div ref={containerRef} className="max-w-[1680px] mx-auto px-6 lg:px-8 py-16 bg-[#f8fafc] min-h-[calc(100vh-80px)]">
       <div className="flex flex-col lg:flex-row gap-12">
         
         {/* Profile Sidebar */}

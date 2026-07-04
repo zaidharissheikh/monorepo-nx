@@ -69,7 +69,7 @@ const ProductsList = () => {
     <div ref={containerRef} className="bg-white min-h-screen">
       {/* Header Area */}
       <div className="bg-[#f8fafc] py-16 px-6 lg:px-12 border-b border-gray-100">
-        <div className="max-w-7xl mx-auto">
+        <div className="max-w-[1680px] mx-auto">
           <div className="mb-8">
             <Breadcrumb items={breadcrumbs} />
           </div>
@@ -93,7 +93,7 @@ const ProductsList = () => {
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 lg:px-12 py-16">
+      <div className="max-w-[1680px] mx-auto px-6 lg:px-12 py-16">
         <div className="flex flex-col lg:flex-row gap-16">
           {/* Filters Sidebar - Minimalist List */}
           <aside className="w-full lg:w-64 shrink-0">
