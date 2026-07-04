@@ -33,7 +33,7 @@ A dedicated application for store administrators to manage products, view orders
 
 - **Workspace Management**: Nx
 - **Backend**: Node.js, Express, Socket.IO
-- *(Update this section with your specific frontend framework, database, and other key technologies)*
+- **Frontend**: React, TypeScript
 
 ---
 *This is a personal learning project and is not intended for production use.*
