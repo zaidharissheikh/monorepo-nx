@@ -24,6 +24,20 @@ export interface IOrder extends Document {
   paymentMethod?: string;
 }
 
+import { fieldEncryption } from 'mongoose-field-encryption';
+
+const shippingAddressSchema = new Schema({
+  address: { type: String, required: true },
+  city: { type: String, required: true },
+  postalCode: { type: String, required: true },
+  country: { type: String, required: true },
+}, { _id: false });
+
+shippingAddressSchema.plugin(fieldEncryption, {
+  fields: ['address', 'city', 'postalCode', 'country'],
+  secret: process.env.ENCRYPTION_KEY || 'default_secret_key_for_development_only_123',
+});
+
 const orderSchema = new Schema<IOrder>(
   {
     user: {
@@ -45,10 +59,8 @@ const orderSchema = new Schema<IOrder>(
       },
     ],
     shippingAddress: {
-      address: { type: String, required: true },
-      city: { type: String, required: true },
-      postalCode: { type: String, required: true },
-      country: { type: String, required: true },
+      type: shippingAddressSchema,
+      required: true,
     },
     totalPrice: {
       type: Number,

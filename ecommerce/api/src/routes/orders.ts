@@ -65,7 +65,7 @@ router.get('/myorders', protect, async (req: Request, res: Response) => {
 // @access  Private/Admin
 router.get('/', protect, admin, async (req: Request, res: Response) => {
   try {
-    const orders = await Order.find({}).populate('user', 'name email').sort({ createdAt: -1 });
+    const orders = await Order.find({}).populate('user', 'name email __enc_name __enc_email').sort({ createdAt: -1 });
     res.json(orders);
   } catch (error) {
     res.status(500).json({ message: 'Server Error fetching orders' });

@@ -24,7 +24,7 @@ router.get('/stats', protect, admin, async (req: Request, res: Response) => {
 
     // Recent orders for the activity feed
     const recentOrders = await Order.find({})
-      .populate('user', 'name')
+      .populate('user', 'name __enc_name')
       .sort({ createdAt: -1 })
       .limit(5);
 

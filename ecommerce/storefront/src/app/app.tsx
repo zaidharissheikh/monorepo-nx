@@ -35,9 +35,9 @@ export function App() {
             <Route path="/cart" element={<Cart />} />
             {/* Protected Profile Route */}
             <Route path="/profile" element={isLoggedIn ? <Profile /> : <Navigate to="/login" replace />} />
-            <Route path="/payment/:orderId" element={<MockPayment />} />
-            <Route path="/payment-success/:orderId" element={<PaymentSuccess />} />
-            <Route path="/payment-failed" element={<PaymentFailed />} />
+            <Route path="/payment/:orderId" element={isLoggedIn ? <MockPayment /> : <Navigate to="/login" replace />} />
+            <Route path="/payment-success/:orderId" element={isLoggedIn ? <PaymentSuccess /> : <Navigate to="/login" replace />} />
+            <Route path="/payment-failed" element={isLoggedIn ? <PaymentFailed /> : <Navigate to="/login" replace />} />
           </Routes>
         </main>
         <Footer />

@@ -20,7 +20,8 @@ router.post('/register', async (req: Request, res: Response): Promise<any> => {
   const { name, email, password, role } = req.body;
 
   try {
-    const userExists = await User.findOne({ email });
+    const emailHash = require('crypto').createHash('sha256').update(email.toLowerCase()).digest('hex');
+    const userExists = await User.findOne({ $or: [{ emailHash }, { email }, { email: email.toLowerCase() }] });
 
     if (userExists) {
       return res.status(400).json({ message: 'User already exists' });
@@ -40,20 +41,20 @@ router.post('/register', async (req: Request, res: Response): Promise<any> => {
       notificationService.createNotification({
         userId,
         title: 'Welcome!',
-        message: `Your account has been created successfully. Welcome to StoreFront, ${user.name}!`,
+        message: `Your account has been created successfully. Welcome to StoreFront, ${name}!`,
         type: NOTIFICATION_TYPES.ACCOUNT_CREATED,
       }).catch(err => console.error('[Auth] Notification error:', err));
 
       notificationService.notifyAdmins({
         title: 'New User Registered',
-        message: `${user.name} (${user.email}) has registered a new account.`,
+        message: `${name} (${email}) has registered a new account.`,
         type: NOTIFICATION_TYPES.NEW_USER_REGISTERED,
       }).catch(err => console.error('[Auth] Admin notification error:', err));
 
       res.status(201).json({
         _id: user._id,
-        name: user.name,
-        email: user.email,
+        name: name,
+        email: email,
         role: user.role,
         token: generateToken(userId),
       });
@@ -72,7 +73,8 @@ router.post('/login', async (req: Request, res: Response): Promise<any> => {
   const { email, password } = req.body;
 
   try {
-    const user = await User.findOne({ email });
+    const emailHash = require('crypto').createHash('sha256').update(email.toLowerCase()).digest('hex');
+    const user = await User.findOne({ $or: [{ emailHash }, { email }, { email: email.toLowerCase() }] });
 
     if (user && (await user.matchPassword(password))) {
       res.json({
