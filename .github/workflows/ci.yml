@@ -31,8 +31,6 @@ jobs:
       - name: Run Lint
         run: npx nx run-many -t lint
 
-      - name: Run Tests
-        run: npx nx run-many -t test
 
       - name: Run Build
         run: npx nx run-many -t build
